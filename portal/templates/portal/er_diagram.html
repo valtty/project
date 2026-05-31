@@ -1,0 +1,50 @@
+{% extends 'portal/base.html' %}
+{% block content %}
+<div class="card">
+    <h2>ER-диаграмма базы данных</h2>
+    <div class="diagram">
+        <pre>
+┌─────────────────────┐     ┌─────────────────────┐
+│        User         │     │    Application      │
+├─────────────────────┤     ├─────────────────────┤
+│ id (PK)             │────<│ user_id (FK)        │
+│ username (UNIQUE)   │     │ id (PK)             │
+│ password            │     │ course              │
+│ full_name           │     │ start_date          │
+│ email               │     │ payment_method      │
+│ phone               │     │ status              │
+└─────────────────────┘     │ created_at          │
+                            └─────────────────────┘
+                                      │
+                                      │
+                                      ▼
+                            ┌─────────────────────┐
+                            │       Review        │
+                            ├─────────────────────┤
+                            │ id (PK)             │
+                            │ user_id (FK)        │
+                            │ application_id (FK) │
+                            │ text                │
+                            │ created_at          │
+                            └─────────────────────┘
+
+═══════════════════════════════════════════════════════════════
+СВЯЗИ:
+═══════════════════════════════════════════════════════════════
+User (1) ──────────── (Много) Application
+Application (1) ───── (1) Review
+
+ТИПЫ ДАННЫХ:
+═══════════════════════════════════════════════════════════════
+User.username     : VARCHAR(150) NOT NULL UNIQUE
+User.password     : VARCHAR(128) NOT NULL
+User.phone        : VARCHAR(16) (формат: 8(XXX)XXX-XX-XX)
+Application.course: VARCHAR(100) (choices: 3 варианта курсов)
+Application.status: VARCHAR(50) (default: 'Новая')
+Application.payment_method : VARCHAR(50) (choices: наличными/перевод)
+Review.text       : TEXT
+        </pre>
+    </div>
+    <a href="{% url 'admin_panel' %}" class="btn">← Назад в админ панель</a>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Корочки.есть</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="/" class="logo-link">
+            <img src="{% static 'images/logo.jpg' %}" alt="Корочки.есть" class="logo-img">
+        </a>
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                {% if user.username == 'Admin' %}
+                    <span>{{ user.username }}</span>
+                    <a href="{% url 'admin_panel' %}">Админ панель</a>
+                    <a href="{% url 'er_diagram' %}">ER-диаграмма</a>
+                    <a href="{% url 'logout' %}">Выход</a>
+                {% else %}
+                    <span>{{ user.username }}</span>
+                    <a href="{% url 'create_application' %}">Новая заявка</a>
+                    <a href="{% url 'logout' %}">Выход</a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'login' %}">Вход</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+    <script src="{% static 'js/slider.js' %}"></script>
+</body>
+</html>
