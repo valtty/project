@@ -1,5 +1,3 @@
-
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
@@ -7,14 +5,17 @@ from django.core.validators import RegexValidator
 
 class User(AbstractUser):
     full_name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=16, validators=[RegexValidator(r'^8\(\d{3}\)\d{3}-\d{2}-\d{2}$')])
+    phone = models.CharField(
+        max_length=16,
+        validators=[RegexValidator(r'^8\(\d{3}\)\d{3}-\d{2}-\d{2}$')],
+    )
 
 
 class Application(models.Model):
     COURSE_CHOICES = [
-        ('Основы алгоритмизации и программирования', 'Основы алгоритмизации и программирования'),
-        ('Основы веб-дизайна', 'Основы веб-дизайна'),
-        ('Основы проектирования баз данных', 'Основы проектирования баз данных'),
+        ('Курсы повышения квалификации', 'Курсы повышения квалификации'),
+        ('Курсы переподготовки', 'Курсы переподготовки'),
+        ('Курсы по охране труда', 'Курсы по охране труда'),
     ]
     STATUS = [
         ('Новая', 'Новая'),
@@ -32,6 +33,18 @@ class Application(models.Model):
     payment_method = models.CharField(max_length=50, choices=PAYMENT)
     status = models.CharField(max_length=50, choices=STATUS, default='Новая')
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def status_css_class(self):
+        if self.status == 'Новая':
+            return 'status-new'
+        if self.status == 'Идет обучение':
+            return 'status-progress'
+        if self.status == 'Обучение завершено':
+            return 'status-done'
+        return ''
+
+    def can_leave_review(self):
+        return self.status == 'Обучение завершено' and not hasattr(self, 'review')
 
 
 class Review(models.Model):

@@ -1,22 +1,44 @@
 {% extends 'portal/base.html' %}
+{% block title %}Оформление заявки — Учусь.РФ{% endblock %}
 {% block content %}
-<div class="card">
-    <h2>Формирование заявки на обучение</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label>Наименование курса</label>
-            {{ form.course }}
-        </div>
-        <div class="form-group">
-            <label>Желаемая дата начала обучения (ДД.ММ.ГГГГ)</label>
-            {{ form.start_date }}
-        </div>
-        <div class="form-group">
-            <label>Способ оплаты</label>
-            {{ form.payment_method }}
-        </div>
-        <button type="submit">Отправить</button>
-    </form>
+{% load static %}
+<h1>Оформление заявки</h1>
+<p class="subtitle">Заполните форму, чтобы записаться на дистанционный курс</p>
+
+<div class="application-page">
+    <div class="card course-info">
+        <img src="{% static 'images/card.jpeg' %}" alt="Онлайн-обучение">
+        <h2>Наши курсы</h2>
+        <p>Портал Учусь.РФ предлагает дистанционное обучение для специалистов и организаций. Выберите подходящий курс и укажите удобную дату начала.</p>
+        <ul class="course-list">
+            <li>Курсы повышения квалификации</li>
+            <li>Курсы переподготовки</li>
+            <li>Курсы по охране труда</li>
+        </ul>
+    </div>
+
+    <div class="card form-card">
+        <h2>Форма заявки</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Вид курса</label>
+                {{ form.course }}
+                {% if form.course.errors %}<div class="error">{{ form.course.errors.0 }}</div>{% endif %}
+            </div>
+            <div class="form-group">
+                <label>Желаемая дата начала обучения</label>
+                {{ form.start_date }}
+                <div class="hint">Формат: ДД.ММ.ГГГГ (например, 15.09.2026)</div>
+                {% if form.start_date.errors %}<div class="error">{{ form.start_date.errors.0 }}</div>{% endif %}
+            </div>
+            <div class="form-group">
+                <label>Способ оплаты</label>
+                {{ form.payment_method }}
+                {% if form.payment_method.errors %}<div class="error">{{ form.payment_method.errors.0 }}</div>{% endif %}
+            </div>
+            <button type="submit">Отправить заявку</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

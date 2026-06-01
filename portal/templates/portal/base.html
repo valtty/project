@@ -1,43 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Корочки.есть</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Учусь.РФ{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="navbar">
-        <a href="/" class="logo-link">
-            <img src="{% static 'images/logo.jpg' %}" alt="Корочки.есть" class="logo-img">
+    <header class="navbar">
+        <a href="{% url 'dashboard' %}" class="logo-link">
+            <img src="{% static 'images/logo.jpg' %}" alt="Учусь.РФ" class="logo-img">
+            <span class="logo-text">Учусь.РФ</span>
         </a>
-        <div class="nav-links">
+        <nav class="nav-links">
             {% if user.is_authenticated %}
-                {% if user.username == 'Admin' %}
-                    <span>{{ user.username }}</span>
-                    <a href="{% url 'admin_panel' %}">Админ панель</a>
-                    <a href="{% url 'er_diagram' %}">ER-диаграмма</a>
-                    <a href="{% url 'logout' %}">Выход</a>
+                <span>{{ user.username }}</span>
+                {% if user.username == 'Admin26' %}
+                    <a href="{% url 'admin_panel' %}">Админ-панель</a>
                 {% else %}
-                    <span>{{ user.username }}</span>
                     <a href="{% url 'create_application' %}">Новая заявка</a>
-                    <a href="{% url 'logout' %}">Выход</a>
+                    <a href="{% url 'dashboard' %}">Личный кабинет</a>
                 {% endif %}
+                <a href="{% url 'logout' %}">Выход</a>
             {% else %}
                 <a href="{% url 'login' %}">Вход</a>
                 <a href="{% url 'register' %}">Регистрация</a>
             {% endif %}
-        </div>
-    </div>
-    <div class="container">
+        </nav>
+    </header>
+
+    <main class="container">
         {% if messages %}
             {% for msg in messages %}
                 <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
             {% endfor %}
         {% endif %}
         {% block content %}{% endblock %}
-    </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <h3>Наше местонахождение:</h3>
+            <p>Адрес головного офиса: г. Москва, ул. Большая Ордынка, д. 15</p>
+            <p>Телефон горячей линии: <a href="tel:+74951234567">+7 (495) 123-45-67</a></p>
+            <p>Если возникли вопросы или пожелания, позвоните нам. Ответим оперативно и подробно.</p>
+        </div>
+    </footer>
+
     <script src="{% static 'js/slider.js' %}"></script>
 </body>
 </html>

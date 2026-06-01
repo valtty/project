@@ -1,50 +1,72 @@
 {% extends 'portal/base.html' %}
+{% block title %}Админ-панель — Учусь.РФ{% endblock %}
 {% block content %}
-<h2>Панель администратора</h2>
+<h1>Панель администратора</h1>
 
 <div class="filters">
     <form method="get">
-        <input type="text" name="search" placeholder="Поиск по пользователю" value="{{ search|default:'' }}">
-        <select name="status">
-            <option value="all" {% if status_filter == 'all' or not status_filter %}selected{% endif %}>Все статусы</option>
-            {% for code, name in status_choices %}
-                <option value="{{ name }}" {% if status_filter == name %}selected{% endif %}>{{ name }}</option>
-            {% endfor %}
-        </select>
+        <div class="form-group">
+            <label>Поиск</label>
+            <input type="text" name="search" placeholder="Логин или ФИО" value="{{ search|default:'' }}">
+        </div>
+        <div class="form-group">
+            <label>Статус</label>
+            <select name="status">
+                <option value="all" {% if status_filter == 'all' or not status_filter %}selected{% endif %}>Все</option>
+                {% for code, name in status_choices %}
+                    <option value="{{ name }}" {% if status_filter == name %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Сортировка</label>
+            <select name="sort">
+                <option value="date" {% if sort == 'date' or not sort %}selected{% endif %}>Сначала новые</option>
+                <option value="date_asc" {% if sort == 'date_asc' %}selected{% endif %}>Сначала старые</option>
+                <option value="course" {% if sort == 'course' %}selected{% endif %}>По курсу</option>
+                <option value="status" {% if sort == 'status' %}selected{% endif %}>По статусу</option>
+                <option value="user" {% if sort == 'user' %}selected{% endif %}>По пользователю</option>
+            </select>
+        </div>
         <button type="submit">Применить</button>
-        <a href="{% url 'admin_panel' %}">Сбросить</a>
+        <a href="{% url 'admin_panel' %}" class="btn btn-outline">Сбросить</a>
     </form>
 </div>
 
 {% for app in applications %}
 <div class="card">
-    <p><strong>Заявка #{{ app.id }}</strong> | Пользователь: {{ app.user.username }} | {{ app.user.full_name }}</p>
-    <p>Курс: {{ app.course }}</p>
-    <p>Дата начала: {{ app.start_date|date:"d.m.Y" }}</p>
-    <p>Оплата: {{ app.get_payment_method_display }}</p>
-    <form method="post" action="{% url 'admin_update' app.id %}">
+    <h3>Заявка №{{ app.id }} — {{ app.course }}</h3>
+    <div class="app-info">
+        <p><span>Пользователь:</span> {{ app.user.username }} ({{ app.user.full_name }})</p>
+        <p><span>Телефон:</span> {{ app.user.phone }}</p>
+        <p><span>E-mail:</span> {{ app.user.email }}</p>
+        <p><span>Дата начала:</span> {{ app.start_date|date:"d.m.Y" }}</p>
+        <p><span>Оплата:</span> {{ app.get_payment_method_display }}</p>
+        <p><span>Статус:</span> <span class="{{ app.status_css_class }}">{{ app.status }}</span></p>
+    </div>
+    <form method="post" action="{% url 'admin_update' app.id %}" class="admin-form" onsubmit="return confirm('Изменить статус заявки?');">
         {% csrf_token %}
         <select name="status">
-            <option value="Новая" {% if app.status == 'Новая' %}selected{% endif %}>Новая</option>
-            <option value="Идет обучение" {% if app.status == 'Идет обучение' %}selected{% endif %}>Идет обучение</option>
-            <option value="Обучение завершено" {% if app.status == 'Обучение завершено' %}selected{% endif %}>Обучение завершено</option>
+            {% for code, name in status_choices %}
+                <option value="{{ name }}" {% if app.status == name %}selected{% endif %}>{{ name }}</option>
+            {% endfor %}
         </select>
-        <button type="submit">Изменить статус</button>
+        <button type="submit">Сохранить</button>
     </form>
 </div>
 {% empty %}
-<p>Нет заявок</p>
+<p>Заявок не найдено</p>
 {% endfor %}
 
+{% if applications.paginator.num_pages > 1 %}
 <div class="pagination">
     {% if applications.has_previous %}
-        <a href="?page=1{% if search %}&search={{ search }}{% endif %}{% if status_filter and status_filter != 'all' %}&status={{ status_filter }}{% endif %}">Первая</a>
-        <a href="?page={{ applications.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status_filter and status_filter != 'all' %}&status={{ status_filter }}{% endif %}">Предыдущая</a>
+        <a href="?page={{ applications.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status_filter and status_filter != 'all' %}&status={{ status_filter }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}">Назад</a>
     {% endif %}
-    <span>Страница {{ applications.number }} из {{ applications.paginator.num_pages }}</span>
+    <span>{{ applications.number }} / {{ applications.paginator.num_pages }}</span>
     {% if applications.has_next %}
-        <a href="?page={{ applications.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status_filter and status_filter != 'all' %}&status={{ status_filter }}{% endif %}">Следующая</a>
-        <a href="?page={{ applications.paginator.num_pages }}{% if search %}&search={{ search }}{% endif %}{% if status_filter and status_filter != 'all' %}&status={{ status_filter }}{% endif %}">Последняя</a>
+        <a href="?page={{ applications.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status_filter and status_filter != 'all' %}&status={{ status_filter }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}">Вперёд</a>
     {% endif %}
 </div>
+{% endif %}
 {% endblock %}

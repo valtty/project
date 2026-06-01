@@ -1,7 +1,8 @@
 {% extends 'portal/base.html' %}
+{% block title %}Вход — Учусь.РФ{% endblock %}
 {% block content %}
-<div class="card">
-    <h2>Авторизация</h2>
+<div class="card card-narrow">
+    <h1>Авторизация</h1>
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
@@ -14,6 +15,6 @@
         </div>
         <button type="submit">Войти</button>
     </form>
-    <p>Еще не зарегистрированы? <a href="{% url 'register' %}">Регистрация</a></p>
+    <p class="auth-link">Еще не зарегистрированы? <a href="{% url 'register' %}">Регистрация</a></p>
 </div>
 {% endblock %}

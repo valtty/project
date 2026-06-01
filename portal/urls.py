@@ -10,5 +10,4 @@ urlpatterns = [
     path('review/<int:app_id>/', views.CreateReviewView.as_view(), name='create_review'),
     path('myadmin/', views.AdminPanelView.as_view(), name='admin_panel'),
     path('myadmin/<int:app_id>/', views.AdminPanelView.as_view(), name='admin_update'),
-    path('er/', views.ERDiagramView.as_view(), name='er_diagram'),
 ]

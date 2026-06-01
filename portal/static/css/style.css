@@ -1,3 +1,5 @@
+@import url('../fonts/inter.css');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,298 +7,536 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    background: #f5f7fa;
-    color: #1a1a2e;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    background: #dee2e6;
+    color: #212529;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 24px 20px;
+    flex: 1;
+    width: 100%;
 }
 
+/* шапка */
 .navbar {
     background: #ffffff;
-    color: #1a1a2e;
-    padding: 12px 24px;
+    border-bottom: 1px solid #ced4da;
+    padding: 14px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 15px;
-    border-bottom: 1px solid #e0e0e0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    gap: 12px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: #212529;
 }
 
 .logo-img {
-    height: 50px;
+    height: 65px;
     width: auto;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
 }
 
 .nav-links {
     display: flex;
-    gap: 20px;
+    gap: 18px;
     align-items: center;
     flex-wrap: wrap;
 }
 
 .nav-links a {
-    color: #555;
+    color: #333;
     text-decoration: none;
-    font-size: 14px;
-    transition: color 0.2s;
+    font-size: 15px;
+    transition: opacity 0.2s ease;
 }
 
 .nav-links a:hover {
-    color: #0066cc;
+    opacity: 0.7;
 }
 
 .nav-links span {
-    color: #333;
-    font-weight: 500;
     font-size: 14px;
+    color: #666;
+    padding: 4px 10px;
+    background: #f1f3f5;
+    border-radius: 4px;
 }
 
+/* заголовки */
+h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 8px;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #212529;
+    margin: 24px 0 14px;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #212529;
+}
+
+.subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* карточки */
 .card {
     background: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
     padding: 24px;
-    margin: 16px 0;
-    border-radius: 12px;
-    border: 1px solid #e8e8e8;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    margin-bottom: 16px;
+    transition: box-shadow 0.2s ease;
 }
 
 .card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+.card-narrow {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* формы */
 .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 6px;
-    font-weight: 500;
     font-size: 14px;
-    color: #333;
+    font-weight: 500;
 }
 
 input, select, textarea {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 16px;
+    background: #fff;
+    transition: border-color 0.2s ease;
 }
 
 input:focus, select:focus, textarea:focus {
-    border-color: #0066cc;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(0,102,204,0.1);
+    border-color: #888;
 }
 
-button {
-    padding: 10px 20px;
-    background: #0066cc;
-    color: white;
-    border: none;
-    border-radius: 8px;
+input[type="date"] {
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-button:hover {
-    background: #0052a3;
-}
-
-.alert {
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    font-size: 14px;
-}
-
-.alert-success {
-    background: #e6f4ea;
-    color: #137333;
-    border-left: 3px solid #137333;
-}
-
-.alert-error {
-    background: #fce8e6;
-    color: #c5221f;
-    border-left: 3px solid #c5221f;
 }
 
 .error {
-    color: #c5221f;
+    color: #dc3545;
+    font-size: 12px;
+    font-weight: 300;
+    margin-top: 4px;
+}
+
+.hint {
+    color: #888;
     font-size: 12px;
     margin-top: 4px;
 }
 
-.status-Новая {
-    color: #e67e22;
+button, .btn {
+    display: inline-block;
+    padding: 11px 22px;
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+button:hover, .btn:hover {
+    background: #0069d9;
+}
+
+.btn-outline {
+    background: #ffffff;
+    color: #333;
+    border: 1px solid #ced4da;
+}
+
+.btn-outline:hover {
+    background: #f8f9fa;
+}
+
+/* сообщения */
+.alert {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* статусы */
+.status-new,
+.status-progress,
+.status-done {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 13px;
     font-weight: 500;
 }
 
-.status-Идет-обучение {
-    color: #0066cc;
-    font-weight: 500;
+.status-new {
+    background: #fff3cd;
+    color: #856404;
 }
 
-.status-Обучение-завершено {
-    color: #137333;
-    font-weight: 500;
+.status-progress {
+    background: #e9ecef;
+    color: #495057;
 }
 
+.status-done {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* слайдер */
 .slider-container {
     position: relative;
-    max-width: 100%;
-    margin: 20px 0;
+    margin: 20px 0 28px;
+    border-radius: 10px;
     overflow: hidden;
-    border-radius: 12px;
-    background: #f0f0f0;
+    background: #ffffff;
+    border: 1px solid #ced4da;
 }
 
 .slider {
     position: relative;
+    width: 100%;
+    height: 320px;
 }
 
 .slide {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.6s ease;
 }
 
 .slide.active {
-    display: block;
+    opacity: 1;
+    z-index: 1;
 }
 
 .slide img {
     width: 100%;
-    height: auto;
-    max-height: 300px;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .slider-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0,0,0,0.3);
-    color: white;
+    background: none;
     border: none;
-    padding: 6px 12px;
+    color: #444;
+    font-size: 32px;
+    line-height: 1;
+    padding: 0 4px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-    transition: background 0.2s;
+    z-index: 2;
+    transition: color 0.2s ease, opacity 0.2s ease;
+    opacity: 0.7;
 }
 
 .slider-btn:hover {
-    background: rgba(0,0,0,0.5);
+    background: none;
+    color: #000;
+    opacity: 1;
 }
 
-.prev {
-    left: 8px;
+.slider-btn:active {
+    transform: translateY(-50%);
 }
 
-.next {
-    right: 8px;
+.slider-btn.prev { left: 8px; }
+.slider-btn.next { right: 8px; }
+
+/* заявки */
+.app-info p {
+    margin-bottom: 7px;
+    font-size: 15px;
 }
 
-h2 {
-    font-size: 22px;
-    margin: 24px 0 12px 0;
-    color: #1a1a2e;
+.app-info p span {
+    color: #666;
+    font-weight: 300;
 }
 
-h3 {
-    font-size: 18px;
-    margin-bottom: 12px;
-    color: #1a1a2e;
+.review-block {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #dee2e6;
 }
 
+.review-block textarea {
+    margin: 8px 0 10px;
+}
+
+.my-review {
+    margin-top: 12px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    font-size: 14px;
+    border-left: 3px solid #ced4da;
+}
+
+/* админка */
 .filters {
-    background: white;
-    padding: 16px;
-    border-radius: 12px;
-    border: 1px solid #e8e8e8;
-    margin-bottom: 20px;
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    margin-bottom: 18px;
 }
 
 .filters form {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+    align-items: flex-end;
 }
 
-.filters input, .filters select {
+.filters .form-group {
+    margin-bottom: 0;
     flex: 1;
     min-width: 140px;
+}
+
+.filters label {
+    font-size: 12px;
+    font-weight: 300;
+    color: #666;
 }
 
 .pagination {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
     margin: 24px 0;
 }
 
 .pagination a {
-    color: #0066cc;
+    color: #333;
     text-decoration: none;
-    padding: 6px 12px;
+    padding: 7px 14px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.pagination a:hover {
+    background: #f1f3f5;
 }
 
 .pagination span {
+    padding: 7px 14px;
     color: #666;
-}
-
-.diagram pre {
-    background: #f7f7f9;
-    padding: 16px;
-    border-radius: 8px;
-    overflow-x: auto;
-    font-size: 12px;
-    line-height: 1.4;
-    font-family: 'SF Mono', Monaco, monospace;
-}
-
-.review-text {
-    background: #f7f7f9;
-    padding: 12px;
-    border-radius: 8px;
-    margin: 10px 0;
     font-size: 14px;
 }
-form button {
-    display: inline-block;
+
+.admin-form {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.admin-form select {
     width: auto;
+    flex: 1;
 }
 
-.card form {
-    margin-top: 12px;
+.auth-link {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    font-weight: 300;
 }
 
-.card form button {
-    margin-top: 8px;
-}
-.logo-link {
-    display: inline-block;
-    text-decoration: none;
-    border: none;
+.auth-link a {
+    color: #333;
 }
 
-.logo-link:hover {
-    opacity: 0.9;
+.container a {
+    color: #333;
 }
 
-@media (max-width: 768px) {
-    .container {
-        padding: 12px;
+.container a:hover {
+    text-decoration: underline;
+}
+
+/* страница заявки */
+.application-page {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.course-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.course-info img {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    display: block;
+}
+
+.course-info p {
+    font-size: 14px;
+    font-weight: 300;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+
+.course-info h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.course-list {
+    padding-left: 20px;
+    font-size: 15px;
+}
+
+.course-list li {
+    margin-bottom: 8px;
+}
+
+.form-card {
+    flex: 1.1;
+    min-width: 0;
+}
+
+.form-card h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 20px;
+}
+
+/* футер */
+.footer {
+    background: #ffffff;
+    border-top: 1px solid #ced4da;
+    padding: 28px 24px;
+    margin-top: auto;
+}
+
+.footer-inner {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.footer h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.footer p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+.footer a {
+    color: #212529;
+}
+
+/* мобильная версия */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .logo-img {
+        height: 50px;
+    }
+
+    .logo-text {
+        font-size: 18px;
     }
 
     .navbar {
@@ -304,28 +544,32 @@ form button {
         text-align: center;
     }
 
-    .logo-img {
-        height: 45px;
+    .nav-links {
+        justify-content: center;
     }
 
-    .slider-container {
-        border-radius: 8px;
+    .slider {
+        height: 240px;
     }
 
-    .card {
-        padding: 16px;
-    }
-
-    h2 {
-        font-size: 20px;
+    .application-page {
+        flex-direction: column;
     }
 
     .filters form {
         flex-direction: column;
     }
 
-    .slider-btn {
-        padding: 4px 10px;
-        font-size: 14px;
+    .filters .form-group {
+        width: 100%;
+    }
+
+    .admin-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-form select {
+        width: 100%;
     }
 }

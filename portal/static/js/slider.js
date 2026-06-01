@@ -1,38 +1,35 @@
-let currentIndex = 0;
-let slides = [];
-let autoInterval = null;
+var currentSlide = 0;
+var slides = [];
+var timer = null;
 
-function initSlider() {
-    slides = document.querySelectorAll('.slide');
-    if (slides.length === 0) return;
+function showSlide(n) {
+    if (!slides.length) return;
+    if (n >= slides.length) currentSlide = 0;
+    else if (n < 0) currentSlide = slides.length - 1;
+    else currentSlide = n;
 
-    currentIndex = 0;
-    showSlide(currentIndex);
-
-    if (autoInterval) clearInterval(autoInterval);
-    autoInterval = setInterval(nextSlide, 3000);
-}
-
-function showSlide(index) {
-    if (slides.length === 0) return;
-
-    slides.forEach(function(slide) {
-        slide.classList.remove('active');
-    });
-
-    if (index < 0) index = slides.length - 1;
-    if (index >= slides.length) index = 0;
-    currentIndex = index;
-
-    slides[currentIndex].classList.add('active');
+    for (var i = 0; i < slides.length; i++) {
+        slides[i].classList.remove('active');
+    }
+    slides[currentSlide].classList.add('active');
 }
 
 function nextSlide() {
-    showSlide(currentIndex + 1);
+    showSlide(currentSlide + 1);
 }
 
 function prevSlide() {
-    showSlide(currentIndex - 1);
+    showSlide(currentSlide - 1);
 }
 
-document.addEventListener('DOMContentLoaded', initSlider);
+function startTimer() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(nextSlide, 3000);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    slides = document.querySelectorAll('.slide');
+    if (slides.length === 0) return;
+    showSlide(0);
+    startTimer();
+});
